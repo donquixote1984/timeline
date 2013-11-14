@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  event_category_id: 1
+  data: MyText
+  content: MyText
+
+two:
+  event_category_id: 1
+  data: MyText
+  content: MyText
