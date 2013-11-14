@@ -1,6 +1,16 @@
 function TimePeroid(){
 	this.start_x =0 
 }
+function Career(){
+	this.start = null
+	this.start_YMD = null
+	this.end = null
+	this.end_YMD= null
+	this.title=null
+	this.end = null
+	this.id = null
+	this.bind_node =null
+}
 function Timeline(){
 
 	this.timeline_container = null
@@ -13,7 +23,9 @@ function Timeline(){
 	this.time_period_start = false
 	this.time_period_active_start_x = 0
 	this.time_period_active = null
-
+	this.now = new Date()
+	this.career_list = []
+	this.axis_list = []
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
@@ -22,15 +34,50 @@ function Timeline(){
 		this.time_period_control = this.time_period.find(".control")
 		this.time_period_cursor = this.time_period.find(".cursor")
 		this.time_period_line = this.time_period.find(".line")
-		this.time_period_content = this.time_period.find(".content")
+		this.time_period_content = this.time_period.find(".time-content")
+		this.time_period_axis = this.time_period.find(".time-axis")
 		this.init_control()
 	}
-
+	this.init_data = function(){
+		var _this = this
+		$.getJSON("main/career",function(data){
+			$.each(data,function(entry){
+				var career = new Career()
+				career.start= entry.start_time
+				career.start_YMD = entry.start_time_YMD
+				career.end = entry.end_time
+				career.end_YMD = entry.end_time+YMD
+				career.title = entry.title
+				career.content= entry.content
+				career.id = entry.id
+				_this.career_list.append(career)
+			})
+			_this.init_time_axis()	
+		})
+	}
+ 	this.init_time_axis = function(){
+ 		var framewidth = this.time_period_content.width()
+ 		var scale_max = this.now.getYear()+1
+ 		var scale_max_node = $("<div class='scale'>"+scale_max+"</div>")
+ 		scale_max_node.css({
+ 			"right":framewidth
+ 		})
+ 		this.time_period_axis.append(scale_max_node)
+ 		var index =0 
+ 		while(true){
+ 			scale_max-=1
+ 			var scale_node = $("<div class='scale'>"+scale_max+"</div>")
+ 			this.time_period_axis.append(scale_node)
+ 			if(this.career_list.length>0){
+ 				this.career_list[index].start_YMD.year>scale_max
+ 			}
+ 		}
+ 	}
 	this.init_control = function(){
 		var time_button  = this.time_period_control.find(".time-button")
 		var _this = this
 		time_button.click(function(){
-			if(time_button.attr("toggle")=="on")	{
+			if(time_button.attr("toggle")=="on"){
 				time_button.attr("toggle","off")	
 				time_button.removeClass("time-button-on")
 				_this.time_period.find(".content").removeClass("markable")
@@ -79,8 +126,6 @@ function Timeline(){
 				})
 			}
 		}
-		
-
 	}
 	this.time_period_on_mouse_down = function(e){
 		var _this = e.data.refer
@@ -102,23 +147,7 @@ function Timeline(){
 		_this.time_period_start_x = 0
 	}
 
-
-	this.time_period_mouse_move = function(e){
-		var content = this.time_period.find(".content")
-		var _this= this
-		content.mousemove(function(e){
-			var x = e.clientX
-			_this.time_period_cursor.left(x)
-		})
-	}
-	this.time_period_mouse_down = function(){
-		var content = this.time_period.find(".content")
-		content.mousedown(function(e){
-
-		})
-	}
 	this.init_time_period = function(){
-		var content = this.time_period.find(".content")
 
 	}
 	this.init_time_period_toggle_on = function(){
