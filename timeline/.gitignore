@@ -15,4 +15,5 @@
 /log/*.log
 /tmp
 /app/assets/fonts/*
-/app/assets/font
+/app/assets/fonts
+/app/assets/fonts/*.*

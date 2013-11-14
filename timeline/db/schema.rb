@@ -13,10 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131111143049) do
 
-  create_table "careers", id: false, force: true do |t|
-    t.string   "id",         null: false
-    t.date     "start"
-    t.date     "end"
+  create_table "careers", force: true do |t|
+    t.date     "start_time"
+    t.date     "end_time"
     t.string   "title"
     t.text     "content"
     t.string   "c1"
@@ -33,8 +32,7 @@ ActiveRecord::Schema.define(version: 20131111143049) do
     t.datetime "updated_at"
   end
 
-  create_table "event_details", id: false, force: true do |t|
-    t.string   "id"
+  create_table "event_details", force: true do |t|
     t.integer  "event_category_id"
     t.text     "data"
     t.text     "content"
@@ -42,8 +40,7 @@ ActiveRecord::Schema.define(version: 20131111143049) do
     t.datetime "updated_at"
   end
 
-  create_table "event_times", id: false, force: true do |t|
-    t.string   "id"
+  create_table "event_times", force: true do |t|
     t.datetime "time"
     t.integer  "year"
     t.integer  "month"
@@ -59,8 +56,7 @@ ActiveRecord::Schema.define(version: 20131111143049) do
     t.datetime "updated_at"
   end
 
-  create_table "events", id: false, force: true do |t|
-    t.string   "id"
+  create_table "events", force: true do |t|
     t.string   "event_time_id"
     t.integer  "event_type_id"
     t.datetime "created_at"

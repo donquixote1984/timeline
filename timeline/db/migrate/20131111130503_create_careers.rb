@@ -3,8 +3,8 @@ class CreateCareers < ActiveRecord::Migration
   def up 
     create_table :careers,:id=>false do |t|
 	    t.string :id,  :null=>false, :primary_key => true
-      t.date :start
-      t.date :end
+      t.date :start_time
+      t.date :end_time
       t.string :title
       t.text :content
       t.string :c1
