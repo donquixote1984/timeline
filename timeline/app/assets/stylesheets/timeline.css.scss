@@ -266,5 +266,33 @@ ul, ol {
 }
 
 .scale {
+    float:right;
+    position:relative;
+}
+.scale .standard-scale {
     position:absolute;
+    left:0;
+}
+.time-period-content .interval {
+    position:absolute ;
+    bottom:0;
+}
+
+.interval {
+    position:absolute;
+    bottom:0;
+}
+
+.time-content {
+    height:100%;
+    width:100%;
+    overflow:hidden;
+}
+.time-content ul {
+    height:100%;
+}
+.time-content ul li {
+    height:100%;
+    list-style:none;
+    float:right;
 }

@@ -26,6 +26,9 @@ function Timeline(){
 	this.now = new Date()
 	this.career_list = []
 	this.axis_list = []
+	this.active_interval =8 
+	this.width = 0
+	this.interval_width =0 
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
@@ -37,40 +40,47 @@ function Timeline(){
 		this.time_period_content = this.time_period.find(".time-content")
 		this.time_period_axis = this.time_period.find(".time-axis")
 		this.init_control()
+		this.width = this.time_period.width()
+		this.interval_width = this.width/this.active_interval
+		this.init_data()
 	}
 	this.init_data = function(){
 		var _this = this
-		$.getJSON("main/career",function(data){
-			$.each(data,function(entry){
+		$.getJSON("main/career.json",function(data){
+			$.each(data,function(index,entry){
 				var career = new Career()
 				career.start= entry.start_time
 				career.start_YMD = entry.start_time_YMD
 				career.end = entry.end_time
-				career.end_YMD = entry.end_time+YMD
+				career.end_YMD = entry.end_time_YMD
 				career.title = entry.title
 				career.content= entry.content
 				career.id = entry.id
-				_this.career_list.append(career)
+				_this.career_list.push(career)
 			})
 			_this.init_time_axis()	
 		})
 	}
  	this.init_time_axis = function(){
  		var framewidth = this.time_period_content.width()
- 		var scale_max = this.now.getYear()+1
- 		var scale_max_node = $("<div class='scale'>"+scale_max+"</div>")
- 		scale_max_node.css({
- 			"right":framewidth
- 		})
- 		this.time_period_axis.append(scale_max_node)
- 		var index =0 
- 		while(true){
- 			scale_max-=1
- 			var scale_node = $("<div class='scale'>"+scale_max+"</div>")
- 			this.time_period_axis.append(scale_node)
+ 		var scale_max = this.now.getFullYear()+1
+ 		var _this  = this
+ 		var index = 0
+ 		while(index<this.career_list.length){
+ 			var scale_node = $("<li class='scale'><div class='interval' id='year-interval-"+scale_max+"'>"+scale_max+"</div></li>")
+ 			this.time_period_content.find("ul").append(scale_node)
  			if(this.career_list.length>0){
- 				this.career_list[index].start_YMD.year>scale_max
+ 				this.career_list[index].start_YMD.year > scale_max
+ 				var career_node = $("<div class='career'>"+this.career_list[index].title+"</div>")
+ 				scale_node.append(career_node)
+ 				career_node.css({
+ 					"left": _this.time2offset(this.career_list[index]),
+ 					"width": _this.time2width(this.career_list[index])
+ 				})
+ 				index +=1
  			}
+ 			scale_max -=1
+
  		}
  	}
 	this.init_control = function(){
@@ -105,7 +115,23 @@ function Timeline(){
 			this.time_period_content.bind("mouseup",this.time_period_off_mouse_up)			
 		}
 	}
-	
+	this.time2width = function(career){
+		var start_time = career.start_YMD
+		var end_time = career.end_YMD
+		if(end_time == null){
+			end_time = {
+				year:this.now.getYear(),
+				month:this.now.getMonth(),
+				day:this.now.getDay()
+			}
+		}
+		var m_width = this.interval_width/12
+		return (end_time.year - start_time.year)*this.interval_width + (end_time.month - start_time.month)* m_width
+	}	
+
+	this.time2offset = function(career){
+		return  career.start_YMD.month*100/12 + "%"
+	}
 	this.time_period_on_mouse_move = function(e){
 		var _this = e.data.refer
 		var x = e.clientX
@@ -127,6 +153,7 @@ function Timeline(){
 			}
 		}
 	}
+
 	this.time_period_on_mouse_down = function(e){
 		var _this = e.data.refer
 		var x = e.clientX
