@@ -28,9 +28,41 @@ class MainController < ApplicationController
             :day=>client.end_time.day
           },
           :title=>client.title,
-          :content=>client.content
+          :content=>client.content,
+          :color=>client.color,
+          :events =>custom_json_for_events(client)
         }
       end
       list.to_json
    end
+
+   def custom_json_for_events(career)
+      events = career.events
+      if events.size>0
+        list = events.map do |client|{
+           :id =>client.id,
+          :start_time => client.start_time,
+          :start_time_YMD => {
+            :year=>client.start_time.year,
+            :month=>client.start_time.month,
+            :day=>client.start_time.day
+          },
+          :end_time=>client.end_time,
+          :end_time_YMD=>{
+            :year=>client.end_time.year,
+            :month=>client.end_time.month,
+            :day=>client.end_time.day
+          },
+          :data=>client.event_detail.data,
+          :text=>client.event_detail.content,
+          :category=>client.event_detail.event_category.category
+        } 
+        end
+    end
+ end
+
 end
+=begin
+         
+  
+=end
