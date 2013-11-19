@@ -24,6 +24,10 @@ function Career(){
 	this.color = null
 	this.events = []
 }
+function Distance(){
+	this.dis_start = 0
+	this.dis_end = 0
+}
 function Event(){
 	this.start = null
 	this.start_YMD = null
@@ -58,7 +62,7 @@ function Timeline(){
 
 	this.year_nodes= {}
 	this.max_offset = 0
-
+	this.distance_arr= []	
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
@@ -78,6 +82,7 @@ function Timeline(){
 		this.init_data()
 		this.refresh_event()
 		this.init_control()
+
 	}
 	this.init_data = function(){
 		var _this = this
@@ -129,11 +134,18 @@ function Timeline(){
  					var career_node = $("<div class='career'>"+this.career_list[index].title+"</div>")
  					_this.career_list[index].bind_node = career_node
 	 				scale_node.prepend(career_node)
+	 				var scale_left = _this.time2offset(_this.career_list[index])
+	 				var scale_width = _this.time2width(_this.career_list[index])
 	 				career_node.css({
-	 					"left": _this.time2offset(_this.career_list[index]),
-	 					"width": _this.time2width(_this.career_list[index]),
+	 					"left": scale_left,
+	 					"width": scale_width,
 	 					"background":_this.career_list[index].color
 	 				})
+
+	 				var d = new Distance()
+	 				d.dis_start = scale_left
+	 				d.dis_end = scale_left+scale_width
+	 				_this.distance_arr.push(d)
 	 				if(index==0){
 	 					offset = _this.time2offset_end(this.career_list[index]).offset
 	 				}
@@ -151,7 +163,7 @@ function Timeline(){
  			var buffer_node = $("<li class='scale'><div class='interval' style='width:"+(framewidth/2-this.interval_width-offset*this.interval_width)+"px' id='time-period-buffer'></div></div>")
  			//this.time_period_content.find("ul").prepend(buffer_node)
  		}
-
+ 		this.distance_arr.reverse()
  		this.time_period_content.width((this.now.getFullYear() - scale_max+5)*this.interval_width)
  	}
 
@@ -203,6 +215,7 @@ function Timeline(){
 			this.time_period_content.bind("mousemove",{"refer":_this},this.time_period_off_mouse_move)
 			this.time_period_content.bind("mousedown",{"refer":_this},this.time_period_off_mouse_down)
 			this.time_period_content.bind("mouseup",{"refer":_this},this.time_period_off_mouse_up)			
+			this.time_period_content.bind("mouseleave",{"refer":_this},this.time_period_off_mouse_out)
 		}
 	}
 	this.time2width = function(career){
@@ -283,26 +296,43 @@ function Timeline(){
 		_this.time_period_scroll_left_x = _this.time_period_content.offset().left
 		
 	}
+	this.time_period_off_mouse_out = function(e){
+		var _this = e.data.refer
+		_this.time_period_scroll_on = false
+
+	}
 	this.time_period_off_mouse_move = function(e){
 		var _this = e.data.refer
 		var x = e.clientX
 		if(_this.time_period_scroll_on){
+			console.log("on")
 			//_this.time_period_content_container.scrollLeft(_this.time_period_scroll_left_x+_this.time_period_scroll_x-x)
 			var left = _this.time_period_content.offset().left
 			var offset = _this.time_period_scroll_x-x
-			_this.time_period_content.offset(
+			if(_this.time_period_scroll_left_x-offset < _this.time_period.width()/2-_this.time_period_content.width()){
+				_this.time_period_content.offset(
+				{
+					//top:0,
+					left:_this.time_period.width()/2-_this.time_period_content.width()
+				}
+			)
+			}
+			else{
+				_this.time_period_content.offset(
 				{
 					//top:0,
 					left:_this.time_period_scroll_left_x-offset
 				}
 			)
+			}
+			
+			
 		}
 	}
 
 	this.time_period_off_mouse_up = function(e){
 		var _this = e.data.refer
 		_this.time_period_scroll_on = false
-		
 	}
 
 	this.init_time_period = function(){
