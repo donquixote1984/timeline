@@ -48,8 +48,8 @@ function Timeline(){
 		this.width = this.time_period.width()
 		this.interval_width = this.width/this.active_interval
 		this.init_data()
-		this.refresh_event()
-		this.init_control()
+		//this.refresh_event()
+		//this.init_control()
 
 	}
 	this._get_month_between = function(career){
@@ -102,31 +102,26 @@ function Timeline(){
 				}
 				_this.career_list.push(career)
 			})
-			var framewidth = _this.time_period_content.width()
-	 		_this.max_time_width = _get_max_time_width(framewidth)
+			var framewidth = _this.time_period.width()
+	 		_this.max_time_width = _this._get_max_time_width(framewidth)
 	 		_this.min_time_width = framewidth/6
 			_this.init_time_axis()	
 			//_this.init_events()
 		})
 	}
-	this.init_range = function(){
-		var framewidth = this.time_period_content.width()
-		for(var i =0;i<120;i++){
-			range[i] = 
-		}
-	}
-	this._get_max_time_width(framewidth){
+
+	this._get_max_time_width = function(framewidth){
 		if(this.time_month_max>60){
 			return framewidth/2
 		}
-		else if(this.time_month_max>36&&max<60){
+		else if(this.time_month_max>30&&this.time_month_max<60){
 			return framewidth/3
 		}
 		else {
 			return framewidth/4
 		}
 	}
-	this._get_time_width(month){
+	this._get_time_width = function(month){
 		return (month - this.time_month_min)/(this.time_month_max - this.time_month_min) * (this.max_time_width - this.min_time_width) + this.min_time_width
 	}
 
@@ -136,18 +131,19 @@ function Timeline(){
  		var index = 0
  		var offset  = 0	
  		var scale_ruler= 0
-
+ 		console.log(this.max_time_width)
+ 		console.log(this.min_time_width)
  		for(var i = 0;i<this.career_list.length;i++){
  			var career = this.career_list[i]
  			var career_dom_width = this._get_time_width(career.monthes)
  			var career_node =  $("<li class='v-career' style='width:"+career_dom_width+"px;background:"+career.color+"' id='career-"+career.id+"' start='"+career.start_YMD.year+"/"+career.start_YMD.month+"'>"+
  				"<div class='v-career-left-time'>"+career.start_YMD.year+"/"+career.start_YMD.month+"</div>"+
- 				"<div class='v-career-right-time'>"+career.start_YMD.year+"/"+career.start_YMD.month+"</div>"+
+ 				"<div class='v-career-right-time'>"+career.end_YMD.year+"/"+career.end_YMD.month+"</div>"+
  				"<div class='v-career-content'>"+
  				"</div>"+
  			"</li>")
  			career_node.disableTextSelect()
- 			this.time_period_content.find("ul").append(scale_node)
+ 			this.time_period_content.find("ul").append(career_node)
  		}
  	}
 

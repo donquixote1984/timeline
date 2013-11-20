@@ -1,3 +1,13 @@
+jQuery.fn.disableTextSelect = function() {
+	return this.each(function() {
+		$(this).css({
+			'MozUserSelect':'none',
+			'webkitUserSelect':'none'
+		}).attr('unselectable','on').bind('selectstart', function() {
+			return false;
+		});
+	});
+};
 function Career(){
 	this.start = null
 	this.start_YMD = null

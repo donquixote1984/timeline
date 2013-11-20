@@ -1,13 +1,4 @@
-jQuery.fn.disableTextSelect = function() {
-	return this.each(function() {
-		$(this).css({
-			'MozUserSelect':'none',
-			'webkitUserSelect':'none'
-		}).attr('unselectable','on').bind('selectstart', function() {
-			return false;
-		});
-	});
-};
+
 Array.prototype.last = function(){
 	return this[this.length-1]
 }

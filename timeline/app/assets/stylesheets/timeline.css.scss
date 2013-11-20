@@ -256,6 +256,7 @@ ul, ol {
 }
 
 
+
 .arrow-bottom {
     border-color:  rgba(0,0,0,0) rgba(0,0,0,0) #FFFFFF rgba(0, 0, 0, 0);
     border-style: solid;
@@ -336,7 +337,8 @@ ul, ol {
     list-style:none;
     float:right;
     min-width:50px;
-    height:150px;
+    height:140px;
+    margin-left:20px;
 }
 .career {
     position:absolute;
