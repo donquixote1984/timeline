@@ -8,34 +8,14 @@ jQuery.fn.disableTextSelect = function() {
 		});
 	});
 };
-
+Array.prototype.last = function(){
+	return this[this.length-1]
+}
 function TimePeroid(){
 	this.start_x =0 
 }
-function Career(){
-	this.start = null
-	this.start_YMD = null
-	this.end = null
-	this.end_YMD= null
-	this.title=null
-	this.end = null
-	this.id = null
-	this.bind_node =null
-	this.color = null
-	this.events = []
-}
-function Distance(){
-	this.dis_start = 0
-	this.dis_end = 0
-}
-function Event(){
-	this.start = null
-	this.start_YMD = null
-	this.end = null
-	this.end_YMD = null
-	this.id = null
-	this.color = null
-}
+
+
 function Timeline(){
 
 	this.timeline_container = null
@@ -53,6 +33,7 @@ function Timeline(){
 	this.time_spot_content =null
 	this.now = new Date()
 	this.career_list = []
+	this.career_node_list = []
 	this.axis_list = []
 	this.active_interval =8 
 	this.event_interval = 6 
@@ -61,8 +42,12 @@ function Timeline(){
 	this.time_period_scroll_on = false
 
 	this.year_nodes= {}
-	this.max_offset = 0
-	this.distance_arr= []	
+
+	this.center_node = null
+	this.offset_check_num = 10
+
+	this.init_offset = 0
+	this.min_career_width = 200
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
@@ -122,6 +107,7 @@ function Timeline(){
  		var _this  = this
  		var index = 0
  		var offset  = 0	
+ 		var scale_ruler= 0
  		while(index<this.career_list.length){
  			var scale_node = $("<li class='scale' ><div class='interval' id='year-interval-"+scale_max+"' ><span>"+scale_max+"</span></div></li>")
  			scale_node.width(this.interval_width)
@@ -136,16 +122,21 @@ function Timeline(){
 	 				scale_node.prepend(career_node)
 	 				var scale_left = _this.time2offset(_this.career_list[index])
 	 				var scale_width = _this.time2width(_this.career_list[index])
+	 				if(scale_width<_this.min_career_width){
+	 					career_node.width(_this.min_career_width)
+	 					var k = _this.min_career_width / scale_width
+	 					scale_node.width(scale_node.width()*k)
+	 				}
 	 				career_node.css({
 	 					"left": scale_left,
 	 					"width": scale_width,
 	 					"background":_this.career_list[index].color
 	 				})
-
-	 				var d = new Distance()
-	 				d.dis_start = scale_left
-	 				d.dis_end = scale_left+scale_width
-	 				_this.distance_arr.push(d)
+	 				if(this.career_node_list.last()!=null){
+	 					career_node.previous_node = this.career_node_list.last()
+	 					this.career_node_list.last().next_node = career_node
+	 				}
+	 				this.career_node_list.push(career_node)
 	 				if(index==0){
 	 					offset = _this.time2offset_end(this.career_list[index]).offset
 	 				}
@@ -157,14 +148,8 @@ function Timeline(){
 
  		}
  		this.time_period_content.find("ul").children().first().width(this.current_time2width())
- 		if(this.career_list.length>0){
- 			console.log(offset*this.interval_width)
- 			console.log(framewidth/2)
- 			var buffer_node = $("<li class='scale'><div class='interval' style='width:"+(framewidth/2-this.interval_width-offset*this.interval_width)+"px' id='time-period-buffer'></div></div>")
- 			//this.time_period_content.find("ul").prepend(buffer_node)
- 		}
- 		this.distance_arr.reverse()
  		this.time_period_content.width((this.now.getFullYear() - scale_max+5)*this.interval_width)
+ 		this.init_offset  = _this.time_period.width()/2-_this.time_period_content.width()
  	}
 
  	this.init_events = function(){
@@ -305,29 +290,44 @@ function Timeline(){
 		var _this = e.data.refer
 		var x = e.clientX
 		if(_this.time_period_scroll_on){
-			console.log("on")
 			//_this.time_period_content_container.scrollLeft(_this.time_period_scroll_left_x+_this.time_period_scroll_x-x)
 			var left = _this.time_period_content.offset().left
 			var offset = _this.time_period_scroll_x-x
+
 			if(_this.time_period_scroll_left_x-offset < _this.time_period.width()/2-_this.time_period_content.width()){
 				_this.time_period_content.offset(
-				{
-					//top:0,
-					left:_this.time_period.width()/2-_this.time_period_content.width()
-				}
-			)
+					{
+						left:_this.time_period.width()/2-_this.time_period_content.width()
+					}
+				)
 			}
 			else{
 				_this.time_period_content.offset(
-				{
-					//top:0,
-					left:_this.time_period_scroll_left_x-offset
-				}
-			)
+					{
+						left:_this.time_period_scroll_left_x-offset
+					}
+				)
 			}
-			
-			
 		}
+	}
+
+	this.check_center = function(offset){
+		this.center_node.move(offset)
+		if(!this.center_node.check()){
+			this.re_loc_center(offset)
+		}
+	}
+	this.re_loc_center = function(offset){
+		var current_node = this.center_node.bind_node
+		if(offset<0){
+			if(current_node.previous_node!=null){
+				current_node.previous_node
+			}
+		}
+	}
+
+	this.current_offset= function(){
+		this.time_period_content.offset().left - _this.init_offset
 	}
 
 	this.time_period_off_mouse_up = function(e){

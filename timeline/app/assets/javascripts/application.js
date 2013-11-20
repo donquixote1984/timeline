@@ -13,5 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
-//= require timeline
+//= require timeline-relative
+//= require timeline-view
 //= require main

@@ -1,0 +1,34 @@
+So how to locate the fuckin center node when dragging?
+A fully scan is most safe and slow, and will be calculate every dragging. dangerous for thousands of nodes.
+
+Every dragging event will generate one variable:
+
+clientX
+
+every time record the previous clientX and get the new clientX. 
+
+the distance between the 2 clientX is the offset of every dragging.
+
+just use this offset.
+
+suppose the current center node is N1, current positon is N1->p
+
+the left positon is N1->l  the right position is N1->r
+
+if offset > 0 
+
+current positon is : N1->p + offset 
+
+if N1->p > N1->right . //change the center node to N2
+	relocate right 10 nodes
+
+else  //offset< 0
+
+current position is : N1->p + offset
+
+if N1->p < N1->left  change the center node to N0
+	relocate left 10 nodes
+
+Damn.
+
+
