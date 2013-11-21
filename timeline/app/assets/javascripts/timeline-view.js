@@ -45,7 +45,7 @@ function Timeline(){
 
 	this.center_node = null
 	this.content_width = 0
-
+	this.frame_width = 0
 
 	this.center_node =  new CenterNode()
 
@@ -137,9 +137,9 @@ function Timeline(){
 				}
 				_this.career_list.push(career)
 			})
-			var framewidth = _this.time_period.width()
-	 		_this.max_time_width = _this._get_max_time_width(framewidth)
-	 		_this.min_time_width = framewidth/6
+			_this.frame_width = _this.time_period.width()
+	 		_this.max_time_width = _this._get_max_time_width(_this.frame_width)
+	 		_this.min_time_width = _this.frame_width/6
 			_this.init_time_axis()	
 			_this.init_controls()
 			_this.init_career_events()
@@ -164,7 +164,6 @@ function Timeline(){
 		return (month - this.time_interval_min)/(this.time_interval_max - this.time_interval_min) * (this.max_interval_width - this.min_interval_width) + this.min_interval_width
 	}
 	this.init_time_axis = function(){
- 		var framewidth = this.time_period_content.width()
  		var _this  = this
  		var index = 0
  		var offset  = 0	
@@ -173,7 +172,7 @@ function Timeline(){
  		for(var i = 0;i<this.career_list.length;i++){
  			var career = this.career_list[i]
  			var career_dom_width = this._get_time_width(career.monthes)
- 			ruler+=career_dom_width
+ 			//ruler+=career_dom_width
  			var career_node =  $("<li class='v-timeline-period v-career' style='width:"+career_dom_width+"px;background:"+career.color+"' id='career-"+career.id+"' start='"+career.start_YMD.year+"/"+career.start_YMD.month+"'>"+
  				"<div class='v-career-left-time'>"+career.start_YMD.year+"/"+career.start_YMD.month+"</div>"+
  				"<div class='v-career-right-time'>"+career.end_YMD.year+"/"+career.end_YMD.month+"</div>"+
@@ -191,6 +190,7 @@ function Timeline(){
  			career_node.disableTextSelect()
  			this.time_period_content.find("ul").append(career_node)
  			this.time_period_content.width(this.time_period_content.width()+career_node.width())
+ 			this.career_node_list.push(career_node)
  			if(i==0){
  				continue
  			}
@@ -206,10 +206,11 @@ function Timeline(){
 
  			}
 
- 			this.career_node_list.push(career_node)
+ 			
  		}
 
  		this.content_width = this.time_period_content.width()
+ 		this.center_node.bind_node = this.career_node_list[0]
  	}
  	this.init_controls = function(){
  		var _this  = this
@@ -257,13 +258,16 @@ function Timeline(){
 					}
 				)
 			}
-			_this.sync_events(_this.time_period_content.offset().left, this.content_width)
+			_this.sync_events(_this.time_period_content.offset().left, _this.content_width)
 		}
 		
 	}
 
 	this.sync_events = function(offset,width){
 		this.relocate_center_node(offset,width)
+		if(this.center_node.bind_node == null){
+			return
+		}
 		var events_node = this.center_node.bind_node.events_node
 		var events_node_width = this.center_node.bind_node.events_node_width
 		var events_offset = this.center_node.left_percentage*events_node_width
@@ -272,12 +276,12 @@ function Timeline(){
 		}) 
 	}
 	this.check_range = function(offset,width,career_node){
-		var current_offset = width-offset
 			//return percentage
-		return (current_offset - career_node.right_pos)/career_node.width()
+		return (width+offset-this.frame_width/2-career_node.right_pos)/career_node.width()
 	}
 	this.relocate_center_node = function(offset,width){
-		var center_range = this.check_range(offset,width,tihs.center_node)
+		var current_offset= width+offset-this.frame_width/2
+		var center_range = this.check_range(offset,width,this.center_node.bind_node)
 		if(center_range>0&& center_range<=1){
 			this.center_node.left_percentage = center_range
 			return
@@ -287,17 +291,19 @@ function Timeline(){
 		if(index == null){
 			return
 		}
-
-		this.center_node.bind_node = null
+		
 		if(current_offset < this.center_node.bind_node.right_pos){
+			console.log("toggle")
+			this.center_node.bind_node = null
 			for(var i =1;i<6;i++)	{
 				if(index-i>0){
-					var range_checker = check_range(this.career_node_list[index-i])
+					var range_checker = check_range(offset,width,this.career_node_list[index-i])
 					// check interval
 					if(range_checker>=0&&range_checker<1){
 						//bingo
 						this.center_node.bind_node = this.career_node_list[index-i]
 						this.center_node.left_percentage = range_checker
+						break;
 					}
 				}
 				else{
@@ -307,14 +313,17 @@ function Timeline(){
 			}
 		}
 		else if(current_offset >= this.center_node.bind_node.left_pos){
+			console.log("toggle left")
+			this.center_node.bind_node = null
 			for(var i =1;i<6;i++){
-				if(index+i<this.career_node_list.lengh){
-					var range_checker = check_range(this.career_node_list[index-i])
+				if(index+i<this.career_node_list.length){
+					var range_checker = this.check_range(offset,width,this.career_node_list[index+i])
 					// check interval
 					if(range_checker>=0&&range_checker<1){
 						//bingo
-						this.center_node.bind_node = this.career_node_list[index-i]
+						this.center_node.bind_node = this.career_node_list[index+i]
 						this.center_node.left_percentage = range_checker
+						break;
 					}
 				}
 				else{
@@ -344,7 +353,7 @@ function Timeline(){
  				events_node_ul.append(event_node)
  			}
  			this.time_spot_content.append(events_node)
- 			this.time_spot_content.width(ths.time_spot_content.width()+events_node.width())
+ 			this.time_spot_content.width(this.time_spot_content.width()+events_node.width())
  		}
 	}
 
