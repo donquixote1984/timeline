@@ -27,9 +27,15 @@ function Timeline(){
 	this.max_time_width = 0
 	this.min_time_width = 0 
 
-
+	this.max_interval_width = 50 
+	this.min_interval_width = 0
 	this.time_month_max=0
 	this.time_month_min = 10000000
+	this.time_interval_max  = 0
+	this.time_interval_min = 0
+
+	this.time_period_scroll_x = 0
+	this.time_period_scroll_left_x =0
 
 	this.init = function(){
 		this.id = "timeline"
@@ -67,6 +73,14 @@ function Timeline(){
 
 		return (year2-year1)*12 + month2-month1
 	}
+
+	this._get_month_between_careers = function(career2,career1){
+		var y1 = career1.end_YMD.year
+		var m1 = career1.end_YMD.month
+		var y2 = career2.start_YMD.year
+		var m2 = career2.start_YMD.month
+		return (y2-y1)*12 + m2-m1
+	}
 	this.init_data = function(){
 		var _this = this
 		$.getJSON("main/career.json",function(data){
@@ -81,12 +95,21 @@ function Timeline(){
 				career.color = entry.color
 				career.id = entry.id
 				career.monthes = _this._get_month_between(career)
+				career.interval_monthes = 0
+				if(index>0||_this.career_list.last()!=null){
+					var interval_month  =_this._get_month_between_careers(_this.career_list.last(), career)
+					_this.career_list.last().interval_monthes =  interval_month
+					if(interval_month > _this.time_interval_max){
+						_this.time_interval_max = interval_month
+					}
+				}
 				if(career.monthes>_this.time_month_max){
 					_this.time_month_max = career.monthes
 				}
 				if(career.monthes<_this.time_month_min){
 					_this.time_month_min = career.monthes
 				}
+				
 				if(entry.events!=null){
 					$.each(entry.events,function(i,e){
 						var ev = new Event()
@@ -106,7 +129,8 @@ function Timeline(){
 	 		_this.max_time_width = _this._get_max_time_width(framewidth)
 	 		_this.min_time_width = framewidth/6
 			_this.init_time_axis()	
-			//_this.init_events()
+			_this.init_controls()
+			_this.init_career_events()
 		})
 	}
 
@@ -124,19 +148,19 @@ function Timeline(){
 	this._get_time_width = function(month){
 		return (month - this.time_month_min)/(this.time_month_max - this.time_month_min) * (this.max_time_width - this.min_time_width) + this.min_time_width
 	}
-
+	this._get_interval_width = function(month){
+		return (month - this.time_interval_min)/(this.time_interval_max - this.time_interval_min) * (this.max_interval_width - this.min_interval_width) + this.min_interval_width
+	}
 	this.init_time_axis = function(){
  		var framewidth = this.time_period_content.width()
  		var _this  = this
  		var index = 0
  		var offset  = 0	
  		var scale_ruler= 0
- 		console.log(this.max_time_width)
- 		console.log(this.min_time_width)
  		for(var i = 0;i<this.career_list.length;i++){
  			var career = this.career_list[i]
  			var career_dom_width = this._get_time_width(career.monthes)
- 			var career_node =  $("<li class='v-career' style='width:"+career_dom_width+"px;background:"+career.color+"' id='career-"+career.id+"' start='"+career.start_YMD.year+"/"+career.start_YMD.month+"'>"+
+ 			var career_node =  $("<li class='v-timeline-period v-career' style='width:"+career_dom_width+"px;background:"+career.color+"' id='career-"+career.id+"' start='"+career.start_YMD.year+"/"+career.start_YMD.month+"'>"+
  				"<div class='v-career-left-time'>"+career.start_YMD.year+"/"+career.start_YMD.month+"</div>"+
  				"<div class='v-career-right-time'>"+career.end_YMD.year+"/"+career.end_YMD.month+"</div>"+
  				"<div class='v-career-content'>"+
@@ -144,7 +168,89 @@ function Timeline(){
  			"</li>")
  			career_node.disableTextSelect()
  			this.time_period_content.find("ul").append(career_node)
+ 			this.time_period_content.width(this.time_period_content.width()+career_node.width())
+ 			if(i==0){
+ 				continue
+ 			}
+ 			else{
+ 				var monthes = this.career_list[i].interval_monthes
+ 				var career_interval_dom_width = this._get_interval_width(monthes)
+
+ 				var interval_node = $("<li class='v-timeline-period v-interval' style='width:"+career_interval_dom_width+"px;'>"+
+ 					"</li>")
+ 				this.time_period_content.find("ul").append(interval_node)
+ 				this.time_period_content.width(this.time_period_content.width()+interval_node.width())
+ 			}
  		}
  	}
+ 	this.init_controls = function(){
+ 		var _this  = this
+		this.time_period_content.bind("mousemove",{"refer":this},this.time_period_mouse_move)
+		this.time_period_content.bind("mousedown",{"refer":this},this.time_period_mouse_down)
+		this.time_period_content.bind("mouseup",{"refer":this},this.time_period_mouse_up)			
+		this.time_period_content.bind("mouseleave",{"refer":this},this.time_period_mouse_out)
+ 	}
 
+
+	this.time_period_mouse_down = function(e){
+		var _this = e.data.refer
+		var x = e.clientX
+		_this.time_period_scroll_on = true
+		_this.time_period_scroll_x = x
+		_this.time_period_scroll_left_x = _this.time_period_content.offset().left
+		
+	}
+	this.time_period_mouse_out = function(e){
+		var _this = e.data.refer
+		_this.time_period_scroll_on = false
+	}
+	this.time_period_mouse_up = function(e){
+		var _this = e.data.refer
+		_this.time_period_scroll_on = false
+	}
+	this.time_period_mouse_move = function(e){
+		var _this = e.data.refer
+		var x = e.clientX
+			//_this.time_period_content_container.scrollLeft(_this.time_period_scroll_left_x+_this.time_period_scroll_x-x)
+		var left = _this.time_period_content.offset().left
+		var offset = _this.time_period_scroll_x-x
+		if(_this.time_period_scroll_on){
+			if(_this.time_period_scroll_left_x-offset < _this.time_period.width()/2-_this.time_period_content.width()){
+			_this.time_period_content.offset(
+					{
+						left:_this.time_period.width()/2-_this.time_period_content.width()
+					}
+				)
+			}
+			else{
+				_this.time_period_content.offset(
+					{
+						left:_this.time_period_scroll_left_x-offset
+					}
+				)
+			}
+		}
+		
+	}
+
+
+	this.init_career_events = function(){
+		var odd = false
+ 		var framewidth = this.time_spot.width()
+ 		console.log(framewidth)
+ 		var event_width = framewidth/this.event_interval
+ 		for(var i = 0 ;i<this.career_list.length;i++){
+ 			var events = this.career_list[i].events
+ 			var events_node = $("<div class='events'  id='events-"+this.career_list[i].id+"'><ul></ul></div>")
+ 			var events_node_ul = events_node.find("ul")
+ 			for(var j =0;j<events.length;j++){
+ 				odd = !odd
+ 				var odd_class = odd?"odd":"even"
+ 				var event_node = $("<li class='event' style='width:"+event_width+"px;'><div class='event-slot "+odd_class+"'><div class='event_detail' style='border:1px solid "+this.career_list[i].color+"'>"+events[j].data+"</div></div></li>")
+ 				events_node_ul.append(event_node)
+ 			}
+ 			this.time_spot_content.append(events_node)
+ 		}
+	}
+	
 }

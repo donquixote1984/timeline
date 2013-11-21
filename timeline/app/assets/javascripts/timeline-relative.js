@@ -8,6 +8,10 @@ jQuery.fn.disableTextSelect = function() {
 		});
 	});
 };
+Array.prototype.last = function(){
+	return this[this.length-1]
+}
+
 function Career(){
 	this.start = null
 	this.start_YMD = null

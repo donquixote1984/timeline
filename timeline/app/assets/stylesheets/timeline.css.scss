@@ -336,9 +336,7 @@ ul, ol {
 .time-content ul li {
     list-style:none;
     float:right;
-    min-width:50px;
     height:140px;
-    margin-left:20px;
 }
 .career {
     position:absolute;
@@ -397,4 +395,23 @@ ul, ol {
 #time-spot .odd {
     bottom:0;
     padding-top:10px;
+}
+.v-career {
+    position:relative;
+}
+.v-career-left-time {
+    position:absolute;
+    bottom:-20px;
+    left:-25px;
+    background:white;
+    height:20px;
+    width:50px;
+}
+.v-career-right-time {
+    position:absolute;
+    bottom:-20px;
+    right:-25px;
+    background:white;
+    height:20px;
+    width:50px;
 }
