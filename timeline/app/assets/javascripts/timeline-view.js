@@ -1,3 +1,26 @@
+function CenterNode(){
+	this.bind_node  = null
+	this.center_x = 0
+	this.width =0
+	this.left_pos = 0
+	this.right_pos =0
+
+	this.check = function(){
+		if(this.center_x <this.left_pos||this.center_x>this.right_pos){
+			return false
+		}
+		else{
+			return true
+		}
+	}
+	this.move = function(offset){
+		this.center_x +=offset
+	}
+	this.getPercent= function(){
+		return (this.center_x  - this.left_pos)/this.width
+	}
+}
+
 function Timeline(){
 
 	this.timeline_container = null
@@ -36,6 +59,8 @@ function Timeline(){
 
 	this.time_period_scroll_x = 0
 	this.time_period_scroll_left_x =0
+
+	this.center_node = null
 
 	this.init = function(){
 		this.id = "timeline"
@@ -157,15 +182,24 @@ function Timeline(){
  		var index = 0
  		var offset  = 0	
  		var scale_ruler= 0
+ 		var ruler  =0 
  		for(var i = 0;i<this.career_list.length;i++){
  			var career = this.career_list[i]
  			var career_dom_width = this._get_time_width(career.monthes)
+ 			ruler+=career_dom_width
  			var career_node =  $("<li class='v-timeline-period v-career' style='width:"+career_dom_width+"px;background:"+career.color+"' id='career-"+career.id+"' start='"+career.start_YMD.year+"/"+career.start_YMD.month+"'>"+
  				"<div class='v-career-left-time'>"+career.start_YMD.year+"/"+career.start_YMD.month+"</div>"+
  				"<div class='v-career-right-time'>"+career.end_YMD.year+"/"+career.end_YMD.month+"</div>"+
  				"<div class='v-career-content'>"+
  				"</div>"+
  			"</li>")
+ 			career_node.index = i
+ 			career_node.right_pos = ruler
+
+ 			ruler+=career_dom_width
+
+ 			career_node.left_pos = ruler
+
  			career_node.disableTextSelect()
  			this.time_period_content.find("ul").append(career_node)
  			this.time_period_content.width(this.time_period_content.width()+career_node.width())
@@ -173,14 +207,18 @@ function Timeline(){
  				continue
  			}
  			else{
+
  				var monthes = this.career_list[i].interval_monthes
  				var career_interval_dom_width = this._get_interval_width(monthes)
-
+ 				ruler+=career_interval_dom_width
  				var interval_node = $("<li class='v-timeline-period v-interval' style='width:"+career_interval_dom_width+"px;'>"+
  					"</li>")
  				this.time_period_content.find("ul").append(interval_node)
  				this.time_period_content.width(this.time_period_content.width()+interval_node.width())
+
  			}
+
+ 			this.career_node_list.push(career_node)
  		}
  	}
  	this.init_controls = function(){
@@ -232,12 +270,60 @@ function Timeline(){
 		}
 		
 	}
+	this.check_range = function(offset,width,career_node){
+		var current_offset = width-offset
+			//return percentage
+		return (current_offset - career_node.right_pos)/career_node.width()
 
 
+	}
+	this.relocate_center_node = function(offset,width){
+		var current_offset = width-offset	
+		if(current_offset>this.center_node.right_pos && current_offset<=this.center_node.left_pos){
+			return
+		}
+		var index = this.center_node.index
+		if(index == null){
+			return
+		}
+
+		this.center_node = null
+		if(current_offset < this.center_node.right_pos){
+			
+			for(var i =1;i<6;i++)	{
+				if(index-i>0){
+					var range_checker = check_range(this.career_node_list[index-i])
+					// check interval
+					if(range_checker>=0&&range_checker<1){
+						//bingo
+						this.center_node = this.career_node_list[index-i]
+					}
+				}
+				else{
+					break
+				}
+				
+			}
+		}
+		else if(current_offset >= this.center_node.left_pos){
+			for(var i =1;i<6;i++){
+				if(index+i<this.career_node_list.lengh){
+					var range_checker = check_range(this.career_node_list[index-i])
+					// check interval
+					if(range_checker>=0&&range_checker<1){
+						//bingo
+						this.center_node = this.career_node_list[index-i]
+					}
+				}
+				else{
+					break
+				}
+			}
+		}
+	}
 	this.init_career_events = function(){
 		var odd = false
  		var framewidth = this.time_spot.width()
- 		console.log(framewidth)
  		var event_width = framewidth/this.event_interval
  		for(var i = 0 ;i<this.career_list.length;i++){
  			var events = this.career_list[i].events
@@ -252,5 +338,7 @@ function Timeline(){
  			this.time_spot_content.append(events_node)
  		}
 	}
-	
+
+
+
 }
