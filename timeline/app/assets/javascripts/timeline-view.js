@@ -61,7 +61,7 @@ function Timeline(){
 	this.time_period_scroll_left_x =0
 
 	this.center_node = null
-
+	this.content_width = 0
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
@@ -193,6 +193,7 @@ function Timeline(){
  				"<div class='v-career-content'>"+
  				"</div>"+
  			"</li>")
+ 			this.career_list[i].bind_node = career_node
  			career_node.index = i
  			career_node.right_pos = ruler
 
@@ -220,6 +221,8 @@ function Timeline(){
 
  			this.career_node_list.push(career_node)
  		}
+
+ 		this.content_width = this.time_period_content.width()
  	}
  	this.init_controls = function(){
  		var _this  = this
@@ -267,15 +270,18 @@ function Timeline(){
 					}
 				)
 			}
+			_this.sync_events(_this.time_period_content.offset().left, this.content_width)
 		}
 		
+	}
+
+	this.sync_events = function(offset,width){
+		this.relocate_center_node(offset,width)
 	}
 	this.check_range = function(offset,width,career_node){
 		var current_offset = width-offset
 			//return percentage
 		return (current_offset - career_node.right_pos)/career_node.width()
-
-
 	}
 	this.relocate_center_node = function(offset,width){
 		var current_offset = width-offset	
@@ -286,10 +292,8 @@ function Timeline(){
 		if(index == null){
 			return
 		}
-
 		this.center_node = null
 		if(current_offset < this.center_node.right_pos){
-			
 			for(var i =1;i<6;i++)	{
 				if(index-i>0){
 					var range_checker = check_range(this.career_node_list[index-i])
