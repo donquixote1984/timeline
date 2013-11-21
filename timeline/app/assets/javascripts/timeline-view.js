@@ -1,24 +1,7 @@
 function CenterNode(){
 	this.bind_node  = null
 	this.center_x = 0
-	this.width =0
-	this.left_pos = 0
-	this.right_pos =0
-
-	this.check = function(){
-		if(this.center_x <this.left_pos||this.center_x>this.right_pos){
-			return false
-		}
-		else{
-			return true
-		}
-	}
-	this.move = function(offset){
-		this.center_x +=offset
-	}
-	this.getPercent= function(){
-		return (this.center_x  - this.left_pos)/this.width
-	}
+	this.left_percentage = 0
 }
 
 function Timeline(){
@@ -62,6 +45,10 @@ function Timeline(){
 
 	this.center_node = null
 	this.content_width = 0
+
+
+	this.center_node =  new CenterNode()
+
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
@@ -277,6 +264,12 @@ function Timeline(){
 
 	this.sync_events = function(offset,width){
 		this.relocate_center_node(offset,width)
+		var events_node = this.center_node.bind_node.events_node
+		var events_node_width = this.center_node.bind_node.events_node_width
+		var events_offset = this.center_node.left_percentage*events_node_width
+		this.time_spot_content.offset({
+			left:this.center_node.bind_node.events_node.right_pos + events_offset
+		}) 
 	}
 	this.check_range = function(offset,width,career_node){
 		var current_offset = width-offset
@@ -284,23 +277,27 @@ function Timeline(){
 		return (current_offset - career_node.right_pos)/career_node.width()
 	}
 	this.relocate_center_node = function(offset,width){
-		var current_offset = width-offset	
-		if(current_offset>this.center_node.right_pos && current_offset<=this.center_node.left_pos){
+		var center_range = this.check_range(offset,width,tihs.center_node)
+		if(center_range>0&& center_range<=1){
+			this.center_node.left_percentage = center_range
 			return
 		}
-		var index = this.center_node.index
+	
+		var index = this.center_node.bind_node.index
 		if(index == null){
 			return
 		}
-		this.center_node = null
-		if(current_offset < this.center_node.right_pos){
+
+		this.center_node.bind_node = null
+		if(current_offset < this.center_node.bind_node.right_pos){
 			for(var i =1;i<6;i++)	{
 				if(index-i>0){
 					var range_checker = check_range(this.career_node_list[index-i])
 					// check interval
 					if(range_checker>=0&&range_checker<1){
 						//bingo
-						this.center_node = this.career_node_list[index-i]
+						this.center_node.bind_node = this.career_node_list[index-i]
+						this.center_node.left_percentage = range_checker
 					}
 				}
 				else{
@@ -309,14 +306,15 @@ function Timeline(){
 				
 			}
 		}
-		else if(current_offset >= this.center_node.left_pos){
+		else if(current_offset >= this.center_node.bind_node.left_pos){
 			for(var i =1;i<6;i++){
 				if(index+i<this.career_node_list.lengh){
 					var range_checker = check_range(this.career_node_list[index-i])
 					// check interval
 					if(range_checker>=0&&range_checker<1){
 						//bingo
-						this.center_node = this.career_node_list[index-i]
+						this.center_node.bind_node = this.career_node_list[index-i]
+						this.center_node.left_percentage = range_checker
 					}
 				}
 				else{
@@ -329,9 +327,15 @@ function Timeline(){
 		var odd = false
  		var framewidth = this.time_spot.width()
  		var event_width = framewidth/this.event_interval
+ 		var ruler = 0
  		for(var i = 0 ;i<this.career_list.length;i++){
  			var events = this.career_list[i].events
  			var events_node = $("<div class='events'  id='events-"+this.career_list[i].id+"'><ul></ul></div>")
+ 			events_node.right_pos = ruler
+ 			ruler+=events_node.width()
+ 			events_node.left_pos = ruler
+ 			this.career_list[i].bind_node.events_node = events_node
+ 			this.career_list[i].bind_node.events_node_width = events_node.width()
  			var events_node_ul = events_node.find("ul")
  			for(var j =0;j<events.length;j++){
  				odd = !odd
@@ -340,6 +344,7 @@ function Timeline(){
  				events_node_ul.append(event_node)
  			}
  			this.time_spot_content.append(events_node)
+ 			this.time_spot_content.width(ths.time_spot_content.width()+events_node.width())
  		}
 	}
 
