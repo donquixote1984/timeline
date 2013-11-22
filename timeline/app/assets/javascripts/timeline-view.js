@@ -343,18 +343,22 @@ function Timeline(){
  		var event_width = framewidth/this.event_interval
  		var ruler = 0
  		for(var i = 0 ;i<this.career_list.length;i++){
+ 			var width_record = 0
  			var events = this.career_list[i].events
  			var events_node = $("<div class='events'  id='events-"+this.career_list[i].id+"'><ul></ul></div>")
  			events_node.right_pos = ruler
  			var events_node_ul = events_node.find("ul")
+ 			var event_node_margin = 50
  			for(var j =0;j<events.length;j++){
  				odd = !odd
  				var odd_class = odd?"odd":"even"
  				var event_node = $("<li class='event' style='width:"+event_width+"px;'><div class='event-slot "+odd_class+"'><div class='event_detail' style='border:1px solid "+this.career_list[i].color+"'>"+events[j].data+"</div></div></li>")
  				events_node_ul.append(event_node)
+ 				width_record+=(event_width+event_node_margin)
+ 				
  			}
  			this.time_spot_content.append(events_node)
- 			this.time_spot_content.width(this.time_spot_content.width()+events_node.width())
+ 			this.time_spot_content.width(this.time_spot_content.width()+width_record)
  			this.career_list[i].bind_node.events_node = events_node
  			this.career_list[i].bind_node.events_node_width = events_node.width()
  			ruler+=events_node.width()
