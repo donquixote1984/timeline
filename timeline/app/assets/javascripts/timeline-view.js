@@ -26,6 +26,7 @@ function Timeline(){
 	this.active_interval =8 
 	this.event_interval = 6 
 	this.width = 0
+	this.time_spot_width = 0
 	this.interval_width =0 
 	this.time_period_scroll_on = false
 	this.width_range = {}
@@ -46,7 +47,7 @@ function Timeline(){
 	this.center_node = null
 	this.content_width = 0
 	this.frame_width = 0
-
+	this.frame_spot_width = 0
 	this.center_node =  new CenterNode()
 
 	this.init = function(){
@@ -64,6 +65,7 @@ function Timeline(){
 		this.time_spot_content =this.time_spot.find(".content-container") 
 
 		this.width = this.time_period.width()
+		this.time_spot_width = this.time_spot.width()
 		this.interval_width = this.width/this.active_interval
 		this.init_data()
 		//this.refresh_event()
@@ -270,15 +272,20 @@ function Timeline(){
 		}
 		var events_node = this.center_node.bind_node.events_node
 		var events_node_width = this.center_node.bind_node.events_node_width
+		var events_node_right = this.center_node.bind_node.events_node.right_pos
 		var events_offset = this.center_node.left_percentage*events_node_width
+		var container_offset = this.time_spot_content.offset().left
 		this.time_spot_content.offset({
-			left:this.center_node.bind_node.events_node.right_pos + events_offset
+			left:-(this.frame_spot_width - this.time_spot_width/2 - events_node_right - events_offset)
 		}) 
+
 	}
+
 	this.check_range = function(offset,width,career_node){
 			//return percentage
 		return (width+offset-this.frame_width/2-career_node.right_pos)/career_node.width()
 	}
+
 	this.relocate_center_node = function(offset,width){
 		var current_offset= width+offset-this.frame_width/2
 		var center_range = this.check_range(offset,width,this.center_node.bind_node)
@@ -293,11 +300,10 @@ function Timeline(){
 		}
 		
 		if(current_offset < this.center_node.bind_node.right_pos){
-			console.log("toggle")
-			this.center_node.bind_node = null
+			//this.center_node.bind_node = null
 			for(var i =1;i<6;i++)	{
-				if(index-i>0){
-					var range_checker = check_range(offset,width,this.career_node_list[index-i])
+				if(index-i>=0){
+					var range_checker = this.check_range(offset,width,this.career_node_list[index-i])
 					// check interval
 					if(range_checker>=0&&range_checker<1){
 						//bingo
@@ -313,8 +319,7 @@ function Timeline(){
 			}
 		}
 		else if(current_offset >= this.center_node.bind_node.left_pos){
-			console.log("toggle left")
-			this.center_node.bind_node = null
+			//this.center_node.bind_node = null
 			for(var i =1;i<6;i++){
 				if(index+i<this.career_node_list.length){
 					var range_checker = this.check_range(offset,width,this.career_node_list[index+i])
@@ -341,10 +346,6 @@ function Timeline(){
  			var events = this.career_list[i].events
  			var events_node = $("<div class='events'  id='events-"+this.career_list[i].id+"'><ul></ul></div>")
  			events_node.right_pos = ruler
- 			ruler+=events_node.width()
- 			events_node.left_pos = ruler
- 			this.career_list[i].bind_node.events_node = events_node
- 			this.career_list[i].bind_node.events_node_width = events_node.width()
  			var events_node_ul = events_node.find("ul")
  			for(var j =0;j<events.length;j++){
  				odd = !odd
@@ -354,7 +355,12 @@ function Timeline(){
  			}
  			this.time_spot_content.append(events_node)
  			this.time_spot_content.width(this.time_spot_content.width()+events_node.width())
+ 			this.career_list[i].bind_node.events_node = events_node
+ 			this.career_list[i].bind_node.events_node_width = events_node.width()
+ 			ruler+=events_node.width()
+ 			events_node.left_pos = ruler
  		}
+ 		this.frame_spot_width = this.time_spot_content.width()
 	}
 
 
