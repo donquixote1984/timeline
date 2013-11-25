@@ -65,7 +65,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id: 2,
 					data:"AAF Datastage Integration",
-					content:"AAF Datastage Integration",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"AAF Datestage Integration"
 				})
 			},
@@ -75,7 +75,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id: 2,
 					data:"Cognos Learning Center",
-					content:"Cognos Learning Center",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"Cognos Learning Center"
 				})
 			},
@@ -85,7 +85,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id: 3,
 					data:"OpenPages 6.2",
-					content:"OpenPages 6.2",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"OpenPages 6.2"
 				})
 			},
@@ -95,7 +95,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id: 1,
 					data:"Sterling TMS Report Migration",
-					content:"Sterling TMS Report Migration",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title: "Sterling TMS Report Migration"
 				})
 			},
@@ -105,7 +105,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id: 1,
 					data:"Sterling Nirvana",
-					content:"Sterling Nirvana",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"Sterling Nirvana"
 				})
 			}
