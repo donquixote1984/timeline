@@ -13,6 +13,7 @@ Array.prototype.last = function(){
 }
 
 function Career(){
+	this.name = null
 	this.start = null
 	this.start_YMD = null
 	this.end = null
@@ -31,5 +32,6 @@ function Event(){
 	this.end_YMD = null
 	this.id = null
 	this.color = null
+	this.category = null
 }
 

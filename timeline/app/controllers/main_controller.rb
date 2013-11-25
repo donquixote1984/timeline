@@ -30,7 +30,9 @@ class MainController < ApplicationController
           :title=>client.title,
           :content=>client.content,
           :color=>client.color,
-          :events =>custom_json_for_events(client)
+          :events =>custom_json_for_events(client),
+          :link => client.c1,
+          :name => client.c3
         }
       end
       list.to_json
@@ -54,8 +56,9 @@ class MainController < ApplicationController
             :day=>client.end_time.day
           },
           :data=>client.event_detail.data,
-          :text=>client.event_detail.content,
-          :category=>client.event_detail.event_category.category
+          :content=>client.event_detail.content,
+          :category=>client.event_detail.event_category.category,
+          :title=>client.event_detail.title
         } 
         end
     end

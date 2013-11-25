@@ -108,8 +108,11 @@ function Timeline(){
 				career.content= entry.content
 				career.color = entry.color
 				career.id = entry.id
+				career.name = entry.name
 				career.monthes = _this._get_month_between(career)
 				career.interval_monthes = 0
+				career.link = entry.link
+
 				if(index>0||_this.career_list.last()!=null){
 					var interval_month  =_this._get_month_between_careers(_this.career_list.last(), career)
 					_this.career_list.last().interval_monthes =  interval_month
@@ -131,9 +134,11 @@ function Timeline(){
 						ev.start_YMD = e.start_time_YMD
 						ev.end = e.end_time
 						ev.end_YMD = e.end_time_YMD
-						ev.content = e.cotent
+						ev.content = e.content
+						ev.title = e.title
 						ev.data = e.data
 						ev.id  =e.id
+						ev.category = e.category
 						career.events.push(ev)
 					})
 				}
@@ -175,10 +180,19 @@ function Timeline(){
  			var career = this.career_list[i]
  			var career_dom_width = this._get_time_width(career.monthes)
  			//ruler+=career_dom_width
+
  			var career_node =  $("<li class='v-timeline-period v-career' style='width:"+career_dom_width+"px;background:"+career.color+"' id='career-"+career.id+"' start='"+career.start_YMD.year+"/"+career.start_YMD.month+"'>"+
  				"<div class='v-career-left-time'>"+career.start_YMD.year+"/"+career.start_YMD.month+"</div>"+
  				"<div class='v-career-right-time'>"+career.end_YMD.year+"/"+career.end_YMD.month+"</div>"+
  				"<div class='v-career-content'>"+
+ 				"<div class='v-career-content-left'>"+
+ 				"<img src='"+career.link+"'width='100px' />"+
+ 				"</div>"+
+ 				"<div class='v-career-content-right' style='width:"+(career_dom_width-120)+"px'>"+
+ 				"<h2>"+career.name+"</h2>"+
+ 				"<h4>"+career.title+"</h4>"+
+ 				"<p>"+career.content+"</p>"+
+ 				"</div>"+
  				"</div>"+
  			"</li>")
  			this.career_list[i].bind_node = career_node
@@ -352,7 +366,12 @@ function Timeline(){
  			for(var j =0;j<events.length;j++){
  				odd = !odd
  				var odd_class = odd?"odd":"even"
- 				var event_node = $("<li class='event' style='width:"+event_width+"px;'><div class='event-slot "+odd_class+"'><div class='event_detail' style='border:1px solid "+this.career_list[i].color+"'>"+events[j].data+"</div></div></li>")
+ 				var event_color = this.career_list[i].color
+ 				var event_node = $("<li class='event' style='width:"+event_width+"px;'>"+
+ 					"<div class='event-slot "+odd_class+"'>"+
+ 					"<div class='event-detail-wrapper' style='background:"+event_color+"'>"+
+ 						this._generate_event_structure(events[j])+	
+ 					"</div></div></li>")
  				events_node_ul.append(event_node)
  				width_record+=(event_width+event_node_margin)
  				
@@ -367,6 +386,20 @@ function Timeline(){
  		this.frame_spot_width = this.time_spot_content.width()
 	}
 
+	this._generate_event_structure = function(ev){
+		var event_node = $("<div class='event-detail'><h3 class='event-title'><i class='event-icon glyphicons'></i><span>"+ev.title+"</span></h3></div>")
+		if(ev.category === 'TEXT'){
+			event_node.addClass("event-detail-text")
+			event_node.append($("<p>"+ev.content+"</p>"))
+		}
+		else if(ev.category === "IMAGE"){
 
+		}
+		else if(ev.category === "MAP"){
+
+		}
+		console.log($("<div/>").append(event_node).html())
+		return $("<div/>").append(event_node).html()
+	}
 
 }

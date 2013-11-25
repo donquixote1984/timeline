@@ -3,6 +3,7 @@ class CreateEventDetails < ActiveRecord::Migration
     create_table :event_details, :id=>false  do |t|
 	  t.string :id, :primary=>true
       t.integer :event_category_id
+      t.text :title
       t.text :data
       t.text :content
 
