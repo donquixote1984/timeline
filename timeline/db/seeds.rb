@@ -1,3 +1,4 @@
+#encoding: utf-8 
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -83,7 +84,7 @@ Career.create(
 				start_time: Time.mktime(2011,12,1),
 				end_time: Time.mktime(2012,9,1),
 				event_detail: EventDetail.create({
-					event_category_id: 3,
+					event_category_id:2,
 					data:"OpenPages 6.2",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"OpenPages 6.2"
@@ -93,7 +94,7 @@ Career.create(
 				start_time: Time.mktime(2012,10,1),
 				end_time: Time.mktime(2013,6,1),
 				event_detail: EventDetail.create({
-					event_category_id: 1,
+					event_category_id:2,
 					data:"Sterling TMS Report Migration",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title: "Sterling TMS Report Migration"
@@ -103,12 +104,42 @@ Career.create(
 				start_time: Time.mktime(2013,7,1),
 				end_time: Time.mktime(2013,11,20),
 				event_detail: EventDetail.create({
-					event_category_id: 1,
+					event_category_id:2,
 					data:"Sterling Nirvana",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"Sterling Nirvana"
 				})
-			}
+			},
+			{
+				start_time:Time.mktime(2011,11,1),
+				end_time:Time.mktime(2011,11,6),
+				event_detail: EventDetail.create({
+					event_category_id:2,
+					data:"HIT University Teaching Program",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					title:"HIT University Teaching Program"
+					})
+			},
+			{
+				start_time:Time.mktime(2012,4,1),
+				end_time:Time.mktime(2012,8,1),
+				event_detail: EventDetail.create({
+					event_category_id:2,
+					data:"Distributed Web Image crawler by Scrapy&Python",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					title:"Distributed Web Image crawler by Scrapy&Python"
+					})
+			},
+			{
+				start_time:Time.mktime(2013,1,1),
+				end_time:Time.mktime(2013,11,1),
+				event_detail: EventDetail.create({
+					event_category_id:2,
+					data:"IBM HR Career Path",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					title:"IBM HR Career Path"
+					})
+			},
 		]
 	}]
 	)

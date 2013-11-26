@@ -38,6 +38,26 @@ ActiveRecord::Schema.define(version: 20131114170143) do
     t.text     "title"
     t.text     "data"
     t.text     "content"
+    t.text     "c1"
+    t.text     "c2"
+    t.text     "c3"
+    t.text     "c4"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "event_times", force: true do |t|
+    t.datetime "time"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "event_types", force: true do |t|
+    t.string   "type_string"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

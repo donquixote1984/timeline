@@ -24,7 +24,7 @@ function Timeline(){
 	this.career_node_list = []
 	this.axis_list = []
 	this.active_interval =8 
-	this.event_interval = 6 
+	this.event_interval = 5 
 	this.width = 0
 	this.time_spot_width = 0
 	this.interval_width =0 
@@ -367,7 +367,7 @@ function Timeline(){
  				odd = !odd
  				var odd_class = odd?"odd":"even"
  				var event_color = this.career_list[i].color
- 				var event_node = $("<li class='event' style='width:"+event_width+"px;'>"+
+ 				var event_node = $("<li class='event' style='min-width:"+event_width+"px;'>"+
  					"<div class='event-slot "+odd_class+"'>"+
  					"<div class='event-detail-wrapper' style='background:"+event_color+"'>"+
  						this._generate_event_structure(events[j])+	
@@ -383,6 +383,7 @@ function Timeline(){
  			ruler+=events_node.width()
  			events_node.left_pos = ruler
  		}
+ 		console.log(events_node_ul.width())
  		this.frame_spot_width = this.time_spot_content.width()
 	}
 
@@ -393,12 +394,17 @@ function Timeline(){
 			event_node.append($("<p>"+ev.content+"</p>"))
 		}
 		else if(ev.category === "IMAGE"){
-
+			event_node.addClass("event-detail-image")
+			var image_node = $("<section></section>")
+			var image_detail_node  =$("<div class='event-image'><img src='"+ev.data+"' width='100px'/></div>")
+			var image_text_node = $("<div class='event-detail-text'><p>"+ev.content+"</p></div>")
+			image_node.append(image_detail_node)
+			image_node.append(image_text_node)
+			event_node.append(image_node)
 		}
 		else if(ev.category === "MAP"){
 
 		}
-		console.log($("<div/>").append(event_node).html())
 		return $("<div/>").append(event_node).html()
 	}
 

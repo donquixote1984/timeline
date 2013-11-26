@@ -6,7 +6,10 @@ class CreateEventDetails < ActiveRecord::Migration
       t.text :title
       t.text :data
       t.text :content
-
+      t.text :c1
+      t.text :c2
+      t.text :c3
+      t.text :c4
       t.timestamps
     end
 
