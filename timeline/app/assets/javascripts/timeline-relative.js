@@ -8,6 +8,25 @@ jQuery.fn.disableTextSelect = function() {
 		});
 	});
 };
+
+$.fn.overflow_y = function() {
+    var $this = $(this);
+    var $children = $this.find('*');
+    var len = $children.length;
+
+    if (len) {
+        var maxWidth = 0;
+        var maxHeight = 0
+        $children.map(function(){
+            maxWidth = Math.max(maxWidth, $(this).outerWidth(true));
+            maxHeight = Math.max(maxHeight, $(this).outerHeight(true));
+        });
+
+        return  maxHeight - $this.height();
+    }
+    return 0
+};
+
 Array.prototype.last = function(){
 	return this[this.length-1]
 }

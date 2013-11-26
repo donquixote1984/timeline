@@ -1,4 +1,6 @@
+var __time_line_namespace__ = {}
 $(function(){
+
      var now = null
      var server_date = $("#now").text()
      if(server_date == null){
@@ -13,4 +15,8 @@ $(function(){
 	var timeline = new Timeline()
      timeline.now = now
 	timeline.init()
+     __time_line_namespace__.timeline = timeline
+})
+$(window).load(function(){
+    __time_line_namespace__.timeline.render()
 })

@@ -150,6 +150,7 @@ function Timeline(){
 			_this.init_time_axis()	
 			_this.init_controls()
 			_this.init_career_events()
+			_this.auto_width()
 		})
 	}
 
@@ -361,43 +362,62 @@ function Timeline(){
  			var events = this.career_list[i].events
  			var events_node = $("<div class='events'  id='events-"+this.career_list[i].id+"'><ul></ul></div>")
  			events_node.right_pos = ruler
+
+ 			this.time_spot_content.append(events_node)
  			var events_node_ul = events_node.find("ul")
  			var event_node_margin = 50
  			for(var j =0;j<events.length;j++){
  				odd = !odd
  				var odd_class = odd?"odd":"even"
  				var event_color = this.career_list[i].color
+ 				var event_detail_node = this._generate_event_structure(events[j])
  				var event_node = $("<li class='event' style='min-width:"+event_width+"px;'>"+
  					"<div class='event-slot "+odd_class+"'>"+
  					"<div class='event-detail-wrapper' style='background:"+event_color+"'>"+
- 						this._generate_event_structure(events[j])+	
+ 						$("<div/>").append(event_detail_node).html()+	
  					"</div></div></li>")
+ 				
  				events_node_ul.append(event_node)
  				width_record+=(event_width+event_node_margin)
- 				
+ 				event_node.find(".event-slot").css({"max-width":event_width*2+"px"})
+
+ 				this._apply_auto_width(event_node.find(".event-slot"),event_detail_node.find("p"),event_width*2)
+
  			}
- 			this.time_spot_content.append(events_node)
+ 			
  			this.time_spot_content.width(this.time_spot_content.width()+width_record)
  			this.career_list[i].bind_node.events_node = events_node
  			this.career_list[i].bind_node.events_node_width = events_node.width()
  			ruler+=events_node.width()
  			events_node.left_pos = ruler
  		}
- 		console.log(events_node_ul.width())
  		this.frame_spot_width = this.time_spot_content.width()
 	}
-
+	this._apply_auto_width = function(event_slot, event_text_node,max_width){
+		while(true){
+			if(event_slot.width()>max_width){
+				break;
+			}
+			var height_diff=  event_text_node.outerHeight(true) - event_slot.height()+60
+			if(height_diff>0){
+				event_slot.width(event_slot.width()+height_diff)
+			}
+			else{
+				break;
+			}
+		}
+	}
 	this._generate_event_structure = function(ev){
 		var event_node = $("<div class='event-detail'><h3 class='event-title'><i class='event-icon glyphicons'></i><span>"+ev.title+"</span></h3></div>")
 		if(ev.category === 'TEXT'){
 			event_node.addClass("event-detail-text")
-			event_node.append($("<p>"+ev.content+"</p>"))
+			event_node.append($("<div class='text-board'><p>"+ev.content+"</p></div>"))
 		}
 		else if(ev.category === "IMAGE"){
 			event_node.addClass("event-detail-image")
 			var image_node = $("<section></section>")
 			var image_detail_node  =$("<div class='event-image'><img src='"+ev.data+"' width='100px'/></div>")
-			var image_text_node = $("<div class='event-detail-text'><p>"+ev.content+"</p></div>")
+			var image_text_node = $("<div class='event-detail-text'><div class='text-board'><p>"+ev.content+"</p></div></div>")
 			image_node.append(image_detail_node)
 			image_node.append(image_text_node)
 			event_node.append(image_node)
@@ -405,7 +425,48 @@ function Timeline(){
 		else if(ev.category === "MAP"){
 
 		}
-		return $("<div/>").append(event_node).html()
+		return event_node
 	}
 
+	this.render= function(){
+	}
+	this.auto_width = function(){
+		var _this = this
+		var event_list_nodes = this.time_spot_content.find(".events")
+		$.each(event_list_nodes,function(){
+			var event_nodes = $(this).find(".event")
+			$.each(event_nodes,function(){
+				var event_node = $(this)
+				var event_slot_node = $(this).find(".event-slot")
+				var event_text_node = $(this).find(".text-board>p")
+				var max_width = 2*(event_node.css("min-width"))
+				_this._apply_auto_width(event_slot_node, event_text_node,max_width)
+			})
+		})
+		var first_event = this.time_spot_content.find(".events:first").find(".event:first")
+		var first_width = first_event.find(".event-slot").width()
+		if(first_event.width()!=first_width){
+			var diff = first_width-first_event.width()
+			first_event.width(first_width)
+			this._recalculate_ruler()
+			this.time_spot_content.width(this.time_spot_content.width()+diff)
+			this.frame_spot_width = this.time_spot_content.width()
+			this.career_list[0].bind_node.events_node_width = first_event.parent().width()
+			console.log(first_event.parent().width())
+		}
+		
+	}
+	this._recalculate_ruler= function(){
+		var _this = this
+		var ruler = 0
+		var width_record =0
+		var event_list_nodes = this.time_spot_content.find(".events")
+		$.each(event_list_nodes,function(){
+			$(this).right_pos = ruler
+			 ruler+= $(this).width()
+			 $(this).left_pos = ruler
+
+		})
+		//this.frame_spot_width = this.time_spot_content.width()
+	}
 }

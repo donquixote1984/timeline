@@ -30,8 +30,30 @@ Career.create(
 	title:"硕士",
 	content:"",
 	c1:"http://t2.gstatic.com/images?q=tbn:ANd9GcSsnDxCZ3QwYe2-49pYMvog0KocE-Y3k3bwshLMpV6kksoyEXsGSQ",
-	color: "#33ad33",
-	c3:"吉林大学"
+	color: "#BF5E5E",
+	c3:"吉林大学",
+	events_attributes: [
+			{
+				start_time: Time.mktime(2010,1,1),
+				end_time: Time.mktime(2010,2,1),
+				event_detail: EventDetail.create({
+					event_category_id: 2,
+					data:"AAF Datastage Integration",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					title:"AAF Datestage Integration"
+				})
+			},
+			{
+				start_time: Time.mktime(2010,3,1),
+				end_time: Time.mktime(2010,6,1),
+				event_detail: EventDetail.create({
+					event_category_id: 2,
+					data:"AAF Datastage Integration",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					title:"AAF Datestage Integration"
+				})
+			}
+		]
 	},
 	{
 		start_time: Time.mktime(2009,9,1),
@@ -39,17 +61,30 @@ Career.create(
 		title:"软件工程师",
 		content:"BI系统前端，后端开发",
 		c1:"http://www.gbase.cn/image/bps-01_clip_image001.png",
-		color: "#BF5E5E",
-		c3:"天津南大通用"
-	},
-	{
-		start_time: Time.mktime(2010,7,1),
-		end_time: Time.mktime(2011,11,1),
-		title:"通讯工程师",
-		content:"企业级路由器驱动开发",
-		c1:"http://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/ZTE_logo.svg/200px-ZTE_logo.svg.png",
-		color:"#FF9933",
-		c3:"中兴通讯"
+		color: "#FF9933",
+		c3:"天津南大通用",
+		events_attributes: [
+			{
+				start_time: Time.mktime(2010,1,1),
+				end_time: Time.mktime(2010,2,1),
+				event_detail: EventDetail.create({
+					event_category_id: 2,
+					data:"AAF Datastage Integration",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					title:"AAF Datestage Integration"
+				})
+			},
+			{
+				start_time: Time.mktime(2010,3,1),
+				end_time: Time.mktime(2010,6,1),
+				event_detail: EventDetail.create({
+					event_category_id: 2,
+					data:"AAF Datastage Integration",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					title:"AAF Datestage Integration"
+				})
+			}
+		]
 	},
 	{
 		start_time: Time.mktime(2010,11,18),
@@ -136,7 +171,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id:2,
 					data:"IBM HR Career Path",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"IBM HR Career Path"
 					})
 			},
