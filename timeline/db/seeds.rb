@@ -99,8 +99,8 @@ Career.create(
 				start_time: Time.mktime(2010,12,1),
 				end_time: Time.mktime(2011,6,1),
 				event_detail: EventDetail.create({
-					event_category_id: 2,
-					data:"AAF Datastage Integration",
+					event_category_id: 3,
+					data:"http://zowchow.com/files/2013/01/java-logo.jpg",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"AAF Datestage Integration"
 				})
@@ -109,8 +109,8 @@ Career.create(
 				start_time: Time.mktime(2011,6,1),
 				end_time: Time.mktime(2011,11,1),
 				event_detail: EventDetail.create({
-					event_category_id: 2,
-					data:"Cognos Learning Center",
+					event_category_id: 3,
+					data:"http://zowchow.com/files/2013/01/java-logo.jpg",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"Cognos Learning Center"
 				})
@@ -119,8 +119,8 @@ Career.create(
 				start_time: Time.mktime(2011,12,1),
 				end_time: Time.mktime(2012,9,1),
 				event_detail: EventDetail.create({
-					event_category_id:2,
-					data:"OpenPages 6.2",
+					event_category_id:3,
+					data:"http://zowchow.com/files/2013/01/java-logo.jpg",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"OpenPages 6.2"
 				})
@@ -129,8 +129,8 @@ Career.create(
 				start_time: Time.mktime(2012,10,1),
 				end_time: Time.mktime(2013,6,1),
 				event_detail: EventDetail.create({
-					event_category_id:2,
-					data:"Sterling TMS Report Migration",
+					event_category_id:3,
+					data:"http://images.all-free-download.com/images/graphiclarge/cognos_62958.jpg",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title: "Sterling TMS Report Migration"
 				})
@@ -159,8 +159,8 @@ Career.create(
 				start_time:Time.mktime(2012,4,1),
 				end_time:Time.mktime(2012,8,1),
 				event_detail: EventDetail.create({
-					event_category_id:2,
-					data:"Distributed Web Image crawler by Scrapy&Python",
+					event_category_id:3,
+					data:"http://www.python.org/images/python-logo.gif",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"Distributed Web Image crawler by Scrapy&Python"
 					})
@@ -170,7 +170,7 @@ Career.create(
 				end_time:Time.mktime(2013,11,1),
 				event_detail: EventDetail.create({
 					event_category_id:3,
-					data:"IBM HR Career Path",
+					data:"http://rubyonrails.org/images/rails.png",
 					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
 					title:"IBM HR Career Path",
 					c1:""
