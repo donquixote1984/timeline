@@ -49,7 +49,7 @@ function Timeline(){
 	this.frame_width = 0
 	this.frame_spot_width = 0
 	this.center_node =  new CenterNode()
-
+	this.max_event_image_size = 100
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
@@ -370,13 +370,16 @@ function Timeline(){
  				odd = !odd
  				var odd_class = odd?"odd":"even"
  				var event_color = this.career_list[i].color
+ 				var odd_style = odd?"border-color:rgba(0,0,0,0) rgba(0,0,0,0) "+event_color+" rgba(0,0,0,0)":"border-color:"+event_color+" rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) "
+ 				var odd_arrow = odd?"event-arrow-bottom":"event-arrow-top"
  				var event_detail_node = this._generate_event_structure(events[j])
- 				var event_node = $("<li class='event' style='min-width:"+event_width+"px;'>"+
+ 				var event_node = $("<li class='event' style='min-width:"+event_width+"px;'><div class='event-arrow "+odd_arrow+"' style='"+odd_style+"'/>"+
+
  					"<div class='event-slot "+odd_class+"'>"+
  					"<div class='event-detail-wrapper' style='background:"+event_color+"'>"+
  						$("<div/>").append(event_detail_node).html()+	
  					"</div></div></li>")
- 				
+ 				//<div class='event-arrow'style='"+odd_style+"'/>
  				events_node_ul.append(event_node)
  				width_record+=(event_width+event_node_margin)
  				event_node.find(".event-slot").css({"max-width":event_width*2+"px"})
@@ -395,28 +398,29 @@ function Timeline(){
 	}
 	this._apply_auto_width = function(event_slot, event_text_node,max_width){
 		var counter = 0
+		if(max_width==null){
+			max_width = this.time_spot.width()/this.event_interval 
+		}
 		while(true){
 			counter+=1
 			if(counter>20)
 			{
-				console.log("counter")
 				break;
 			}
-			if(event_slot.width()>max_width){
+			if(event_slot.width()>=max_width){
 				break;
 			}
-			var height_diff=  event_text_node.outerHeight(true) - event_slot.height()+60
-			console.log(height_diff)
+			var height_diff=  event_text_node.outerHeight(true) - event_slot.height()+ 60
 			if(height_diff>0){
 				event_slot.width(event_slot.width()+height_diff)
 			}
 			else{
-				console.log("break")
 				break;
 			}
 		}
 	}
 	this._generate_event_structure = function(ev){
+		var _this = this
 		var event_node = $("<div class='event-detail'><h3 class='event-title'><i class='event-icon glyphicons'></i><span>"+ev.title+"</span></h3></div>")
 		if(ev.category === 'TEXT'){
 			event_node.addClass("event-detail-text")
@@ -425,7 +429,18 @@ function Timeline(){
 		else if(ev.category === "IMAGE"){
 			event_node.addClass("event-detail-image")
 			var image_node = $("<section></section>")
-			var image_detail_node  =$("<div class='event-image'><img src='"+ev.data+"' width='100px'/></div>")
+			var image_detail_node  =$("<div class='event-image'></div>")
+			//image.src = ev.data
+			//image.onload= function(){
+			//	if(this.width>_this.max_event_image_size){
+			//		$(image).width(100)
+			//	}
+			//	
+			//}
+			var img = $("<img src='"+ev.data+"'/>")
+			image_detail_node.append(img)	
+
+			//$(image).appendTo(image_detail_node)
 			var image_text_node = $("<div class='event-detail-text'><div class='text-board'><p>"+ev.content+"</p></div></div>")
 			image_node.append(image_detail_node)
 			image_node.append(image_text_node)
@@ -448,7 +463,7 @@ function Timeline(){
 				var event_node = $(this)
 				var event_slot_node = $(this).find(".event-slot")
 				var event_text_node = $(this).find(".text-board>p")
-				var max_width = 2*(event_node.css("min-width"))
+				var max_width = 2*(event_node.css("min-width").replace('px', ''))
 				_this._apply_auto_width(event_slot_node, event_text_node,max_width)
 			})
 		})
