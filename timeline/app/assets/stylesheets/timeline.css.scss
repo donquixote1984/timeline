@@ -7,11 +7,20 @@ ul, ol {
     padding:0;
 }
 .header {
-    height:60px;
+    height:25px;
     width:100%;
     background:linear-gradient(#333,#555);
-    margin-bottom:10px;
     box-shadow: 0 1px 3px #aaa;
+}
+.p-card {
+    width:200px;
+    min-height:600px;
+    height:auto;
+    position:absolute;
+    left:0;
+    background:#777;
+    border:1px solid #acacac;
+    z-index:9999;
 }
 .main {
     width:100%;
@@ -121,7 +130,7 @@ ul, ol {
     left:0;
     bottom:3px;
     background: #fff;
-    z-index: 9999;
+    z-index: 1000;
 }
 #time-spot .cover-top {
     position: absolute;
@@ -159,7 +168,7 @@ ul, ol {
      position:absolute;
      right:10px;
      top:10px;
-     z-index:9999;
+     z-index:1000;
 }
 
 #time-period .control ul li {
