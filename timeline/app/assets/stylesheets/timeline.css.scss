@@ -382,9 +382,10 @@ ul, ol {
 }
 .event-slot {
     position:absolute;
-    height:50%;
+    height:45%;
     padding: 10px 0px;
     width:100%;
+    overflow:hidden;
 }
 .event-detail {
     width:100%;

@@ -381,7 +381,7 @@ function Timeline(){
  				width_record+=(event_width+event_node_margin)
  				event_node.find(".event-slot").css({"max-width":event_width*2+"px"})
 
- 				this._apply_auto_width(event_node.find(".event-slot"),event_detail_node.find("p"),event_width*2)
+ 				//this._apply_auto_width(event_node.find(".event-slot"),event_detail_node.find("p"),event_width*2)
 
  			}
  			
@@ -394,15 +394,24 @@ function Timeline(){
  		this.frame_spot_width = this.time_spot_content.width()
 	}
 	this._apply_auto_width = function(event_slot, event_text_node,max_width){
+		var counter = 0
 		while(true){
+			counter+=1
+			if(counter>20)
+			{
+				console.log("counter")
+				break;
+			}
 			if(event_slot.width()>max_width){
 				break;
 			}
 			var height_diff=  event_text_node.outerHeight(true) - event_slot.height()+60
+			console.log(height_diff)
 			if(height_diff>0){
 				event_slot.width(event_slot.width()+height_diff)
 			}
 			else{
+				console.log("break")
 				break;
 			}
 		}
@@ -452,7 +461,6 @@ function Timeline(){
 			this.time_spot_content.width(this.time_spot_content.width()+diff)
 			this.frame_spot_width = this.time_spot_content.width()
 			this.career_list[0].bind_node.events_node_width = first_event.parent().width()
-			console.log(first_event.parent().width())
 		}
 		
 	}
