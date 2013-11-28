@@ -190,7 +190,7 @@ function Timeline(){
  				"<div class='v-career-right-time'>"+career.end_YMD.year+"/"+career.end_YMD.month+"</div>"+
  				"<div class='v-career-content'>"+
  				"<div class='v-career-content-left'>"+
- 				"<img src='"+career.link+"'width='100px' />"+
+ 				"<img src='"+career.link+"'width='100px' draggable='false' />"+
  				"</div>"+
  				"<div class='v-career-content-right' style='width:"+(career_dom_width-120)+"px'>"+
  				"<h2>"+career.name+"</h2>"+
