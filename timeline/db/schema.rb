@@ -46,6 +46,22 @@ ActiveRecord::Schema.define(version: 20131128102112) do
     t.datetime "updated_at"
   end
 
+  create_table "event_times", force: true do |t|
+    t.datetime "time"
+    t.integer  "year"
+    t.integer  "month"
+    t.integer  "day"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "event_types", force: true do |t|
+    t.string   "type_string"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "events", force: true do |t|
     t.date     "start_time"
     t.date     "end_time"
