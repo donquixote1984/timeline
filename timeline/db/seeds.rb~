@@ -175,7 +175,7 @@ Career.create(
 					title:"IBM HR Career Path",
 					c1:""
 					})
-			},
+			}
 		]
 	}]
 	)
