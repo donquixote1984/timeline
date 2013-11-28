@@ -50,10 +50,13 @@ function Timeline(){
 	this.frame_spot_width = 0
 	this.center_node =  new CenterNode()
 	this.max_event_image_size = 100
+	this.window_height = $(window).height() - 40
 	this.init = function(){
 		this.id = "timeline"
 		this.timeline_container = $("#"+this.id)
+		this.timeline_container.height(this.window_height)
 		this.time_period = this.timeline_container.find("#time-period")	
+		
 		this.time_spot = this.timeline_container.find("#time-spot")
 		this.time_period_control = this.time_period.find(".control")
 		this.time_period_cursor = this.time_period.find(".cursor")

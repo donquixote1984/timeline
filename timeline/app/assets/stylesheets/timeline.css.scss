@@ -1,13 +1,14 @@
 body {
     margin:0;
     padding:0;
+    position:relative;
 }
 ul, ol {
     margin:0;
     padding:0;
 }
 .header {
-    height:25px;
+    height:40px;
     width:100%;
     background:linear-gradient(#333,#555);
     box-shadow: 0 1px 3px #aaa;
@@ -59,7 +60,7 @@ ul, ol {
 }
 #timeline {
     width:100%;
-    height:530px;
+    min-height:530px;
 
 }
 
@@ -67,11 +68,21 @@ ul, ol {
     width:100%;
 }
 #time-period {
-    height:140px;
+    min-height:140px;
     overflow-x:hidden;
     position:relative;
     width:100%;
+    height:20%
 }
+
+#time-spot {
+   min-height:420px; 
+   background:#fff;
+   position: relative;
+   padding:5px;
+   height:80%;
+}
+
 .shadow-seperator {
     box-shadow:1px 1px 5px rgba(0,0,0,0.5);
     height:1px;
@@ -89,12 +100,7 @@ ul, ol {
     left:0;
     background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMCAYAAAC9QufkAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsHDgcIw3efBgAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAAbSURBVCjPYzhz5sx/BjIBEwMFYFTzqGbaagYAyScDepeg/fIAAAAASUVORK5CYII=);
 }
-#time-spot {
-   height:420px; 
-   background:#fff;
-   position: relative;
-   padding:5px;
-}
+
 #time-spot1:before {
     position: absolute;
     content:"";
