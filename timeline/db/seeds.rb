@@ -6,6 +6,16 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Person.create ({
+	name:"WGX",
+	age:29,
+	city:"上海",
+	mail:"donquixote1984@163.com",
+	detail:"2009年毕业与吉林大学，后加入IBM CDL中国研发中心，从事J2EE开发，对互联网和前端技术有浓厚兴趣",
+	address:"上海浦东新区张江科苑路399号",
+	icon:"https://en.gravatar.com/userimage/58464079/f0d6ed403d31a2ff3caa25db15b2a53a.jpg?size=200",
+	c1:"http://54.254.207.87"
+	})
 EventCategory.create(
 [
 	{category: "MAP"},
@@ -62,7 +72,7 @@ Career.create(
 		content:"BI系统前端，后端开发",
 		c1:"http://www.gbase.cn/image/bps-01_clip_image001.png",
 		color: "#FF9933",
-		c3:"天津南大通用",
+		c3:"南大通用",
 		events_attributes: [
 			{
 				start_time: Time.mktime(2010,1,1),
@@ -121,7 +131,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id:3,
 					data:"http://zowchow.com/files/2013/01/java-logo.jpg",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					content:"OpenPages是IBM BA风险管控产品. 团队负责与国外合作，进行OpenPages产品升级和打包, Jenkins持续集成Ant构建, 以及补丁修复等. 采用J2EE/Weblogic开发",
 					title:"OpenPages 6.2"
 				})
 			},
@@ -131,7 +141,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id:3,
 					data:"http://images.all-free-download.com/images/graphiclarge/cognos_62958.jpg",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					content:"Sterling TMS是Sterling产品线的物流传输管理模块，团队负责报表从Business Object到Cognos迁移, 采用Cognos Framework Manager进行数据建模， Cognos Report Studio进行报表设计， 并实现报表数据优化",
 					title: "Sterling TMS Report Migration"
 				})
 			},
@@ -141,7 +151,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id:2,
 					data:"Sterling Nirvana",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					content:"IBM企业级文件传输产品. 团队负责开发新版本文件服务器监控组件. 包括文件传输统计， 服务器运行状况， 系统报警等. 采用JMX/Dojo实现。",
 					title:"Sterling Nirvana"
 				})
 			},
@@ -171,7 +181,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id:3,
 					data:"http://rubyonrails.org/images/rails.png",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					content:"IBM 40万员工Career path平台,统计内部员工职业轨迹，组织结构树和组织动态。并将所有员工的职业发展记录在案，方便部门信息对称和员工规划。采用Web app形式发布到内网云平台。系统采用Lighttpd/FastCGI/Ruby on Rails/MongoDB架构,前端采用HTML5/CSS3/jQuery/Sass技术实现组织结构和个人时间轴, 后端采用Rails 4.0实现业务逻辑，MongoDB服务端javascript数据清洗, 并用Ruby实现内网HR信息爬虫, 个人负责总体架构和全部开发.并完成组件级开发: 1. 实现基于Canvas的组织结构图(Sina App Engine): http://frenzyyydonquixote.sinaapp.com/ 2. 实现基于时间段的时间轴组件(Amazon EC2): http://54.254.207.87",
 					title:"IBM HR Career Path",
 					c1:""
 					})

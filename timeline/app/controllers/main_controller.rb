@@ -1,11 +1,13 @@
 class MainController < ApplicationController
   def index
     @server_date =Time.now.strftime("%Y/%m/%d") 
+    @person = Person.first()
   end
 
   def career
     @year_history = APP_CONFIG["year_history"]
     @careers = Career.order("start_time desc").limit(@year_history)
+
     respond_to do |format|
       format.json { render json: custom_json_for(@careers)}
     end
