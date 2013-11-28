@@ -1,0 +1,2 @@
+module IeHelper
+end

@@ -1,6 +1,5 @@
 var __time_line_namespace__ = {}
 $(function(){
-
      var now = null
      var server_date = $("#now").text()
      if(server_date == null){
