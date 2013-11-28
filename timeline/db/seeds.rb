@@ -171,7 +171,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id:3,
 					data:"http://rubyonrails.org/images/rails.png",
-					content:"IBM 40万员工Career path平台,统计内部员工职业轨迹，组织结构树和组织动态。并将所有员工的职业发展记录在案，方便部门信息对称和员工规划。采用Web app形式发布到内网云平台。系统采用Lighttpd/FastCGI/Ruby on Rails/MongoDB架构,前端采用HTML5/CSS3/jQuery/Sass技术实现组织结构和个人时间轴, 后端采用Rails 4.0实现业务逻辑，MongoDB服务端javascript数据清洗, 并用Ruby实现内网HR信息爬虫, 个人负责总体架构和全部开发.并完成组件级开发: 1. 实现基于Canvas的组织结构图(Sina App Engine): http://frenzyyydonquixote.sinaapp.com/ 2. 实现基于时间段的时间轴组件(Amazon EC2): http://54.254.207.87",
+					content:"IBM 40万员工Career path平台,统计内部员工职业轨迹，组织结构树和组织动态，方便部门信息对称和员工规划。采用Web app形式发布到内网云平台。系统采用Lighttpd/FastCGI/Ruby on Rails/MongoDB架构,前端采用HTML5/CSS3/jQuery/Sass技术实现组织结构和个人时间轴, 后端采用Rails 4.0实现业务逻辑，MongoDB服务端javascript数据清洗, 并用Ruby实现内网HR信息爬虫, 个人负责总体架构和全部开发.并完成组件级开发:<br/> 1. 实现基于Canvas的组织结构图(Sina App Engine): http://frenzyyydonquixote.sinaapp.com/ <br/> 2. 实现基于时间段的时间轴组件 :http://54.254.207.87  <br/> 3. 搭建Amazon EC2环境"
 					title:"IBM HR Career Path",
 					c1:""
 					})
