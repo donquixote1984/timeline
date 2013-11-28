@@ -44,30 +44,20 @@ Career.create(
 	c3:"吉林大学",
 	events_attributes: [
 			{
-				start_time: Time.mktime(2010,1,1),
-				end_time: Time.mktime(2010,2,1),
+				start_time: Time.mktime(2008,7,1),
+				end_time: Time.mktime(2009,1,1),
 				event_detail: EventDetail.create({
 					event_category_id: 2,
-					data:"AAF Datastage Integration",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-					title:"AAF Datestage Integration"
-				})
-			},
-			{
-				start_time: Time.mktime(2010,3,1),
-				end_time: Time.mktime(2010,6,1),
-				event_detail: EventDetail.create({
-					event_category_id: 2,
-					data:"AAF Datastage Integration",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-					title:"AAF Datestage Integration"
+					data:"IBM中国研发中心（实习）",
+					content:"IBM SOA Center. FileNet流程定制和前端可视化.",
+					title:"IBM中国研发中心（实习）"
 				})
 			}
 		]
 	},
 	{
 		start_time: Time.mktime(2009,9,1),
-		end_time: Time.mktime(2010,7,1),
+		end_time: Time.mktime(2010,10,1),
 		title:"软件工程师",
 		content:"BI系统前端，后端开发",
 		c1:"http://www.gbase.cn/image/bps-01_clip_image001.png",
@@ -79,9 +69,9 @@ Career.create(
 				end_time: Time.mktime(2010,2,1),
 				event_detail: EventDetail.create({
 					event_category_id: 2,
-					data:"AAF Datastage Integration",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-					title:"AAF Datestage Integration"
+					data:"GBase BI",
+					content:"基于GBase列存数据库的BI系统. 后端采用J2EE架构Struts2/Spring/Hibernate实现, 前端采用jQuery实现Portal展现。个人实现数据字典映射模块, CMS模块和前端Portal模块. 实现数据自动建模，内容管理和前端图表展现。",
+					title:"GBase BI"
 				})
 			},
 			{
@@ -89,9 +79,9 @@ Career.create(
 				end_time: Time.mktime(2010,6,1),
 				event_detail: EventDetail.create({
 					event_category_id: 2,
-					data:"AAF Datastage Integration",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-					title:"AAF Datestage Integration"
+					data:"GBase BI v2",
+					content:"基于GBase列存数据库的BI系统，前端全面迁移到FLex，加入即席查询，个人完成即席查询设计和原型，采用jQuery UI和Any Chart图库实现。",
+					title:"GBase BI v2"
 				})
 			}
 		]
@@ -111,8 +101,8 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id: 3,
 					data:"http://zowchow.com/files/2013/01/java-logo.jpg",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-					title:"AAF Datestage Integration"
+					content:"IBM Cognos数据仓库产品整合， 从Adaptive Warehouse 到 Date Stage。采用Java XML技术实现导入规则的转换，并建立Jenkins/Hudson持续集成测试。",
+					title:"Cognos AAF Datestage Integration"
 				})
 			},
 			{
@@ -121,7 +111,7 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id: 3,
 					data:"http://zowchow.com/files/2013/01/java-logo.jpg",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
+					content:"IBM Cognos内部信息共享平台，实现Bug提交管理，API在线查询和内容管理. 采用J2EE架构，Struts2/Spring/Hibernate整合，结合缓存和URL重写，前端jQuery/HTML/CSS",
 					title:"Cognos Learning Center"
 				})
 			},
@@ -160,9 +150,9 @@ Career.create(
 				end_time:Time.mktime(2011,11,6),
 				event_detail: EventDetail.create({
 					event_category_id:2,
-					data:"HIT University Teaching Program",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-					title:"HIT University Teaching Program"
+					data:"HIT/XJTU University Teaching Program",
+					content:"IBM与高校合作授课项目，派遣优秀工程师参与学校课程建设，并作为聘任讲师担任短期(一周)授课任务。个人作为哈尔滨工业大学和西安交通大学讲师,讲授IBM Cognos BI产品相关理论和实践。",
+					title:"HIT/XJTU大学合作项目"
 					})
 			},
 			{
@@ -171,8 +161,8 @@ Career.create(
 				event_detail: EventDetail.create({
 					event_category_id:3,
 					data:"http://www.python.org/images/python-logo.gif",
-					content:"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation",
-					title:"Distributed Web Image crawler by Scrapy&Python"
+					content:"基于Python的scrapy框架，Redis存储url序列和状态记录, Django/jQuery/html5来做状态监控界面，亦可管理爬虫状态，如挂起，等待，停止/执行 等功能, github地址: https://github.com/donquixote1984/scrapy_image_crawler",
+					title:"分布式图片爬虫 Scrapy&Python"
 					})
 			},
 			{
