@@ -56,7 +56,7 @@ function Timeline(){
 		this.timeline_container = $("#"+this.id)
 		this.timeline_container.height(this.window_height)
 		this.time_period = this.timeline_container.find("#time-period")	
-		
+
 		this.time_spot = this.timeline_container.find("#time-spot")
 		this.time_period_control = this.time_period.find(".control")
 		this.time_period_cursor = this.time_period.find(".cursor")
@@ -372,11 +372,12 @@ function Timeline(){
  			for(var j =0;j<events.length;j++){
  				odd = !odd
  				var odd_class = odd?"odd":"even"
+ 				var odd_time_class = odd?"odd-time":"even-time"
  				var event_color = this.career_list[i].color
  				var odd_style = odd?"border-color:rgba(0,0,0,0) rgba(0,0,0,0) "+event_color+" rgba(0,0,0,0)":"border-color:"+event_color+" rgba(0,0,0,0) rgba(0,0,0,0) rgba(0,0,0,0) "
  				var odd_arrow = odd?"event-arrow-bottom":"event-arrow-top"
  				var event_detail_node = this._generate_event_structure(events[j])
- 				var event_node = $("<li class='event' style='min-width:"+event_width+"px;'><div class='event-arrow "+odd_arrow+"' style='"+odd_style+"'/>"+
+ 				var event_node = $("<li class='event' style='min-width:"+event_width+"px;'><div class='event-time "+odd_time_class+"'>"+events[j].start+"</div><div class='event-arrow "+odd_arrow+"' style='"+odd_style+"'/>"+
 
  					"<div class='event-slot "+odd_class+"'>"+
  					"<div class='event-detail-wrapper' style='background:"+event_color+"'>"+
